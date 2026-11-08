@@ -9,7 +9,7 @@ services:
     autoDeploy: true
     healthCheckPath: /legal/privacy
     buildCommand: >-
-      npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
+      npm ci --include=dev && npm pkg set overrides.next=16.4.5 && npm install --package-lock=false --no-audit --no-fund && test "$(node -p "require('next/package.json').version")" = "16.4.5" && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
       test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = b6ac7e369948618f30d65b29bafc2ee2eff252ba &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
@@ -35,7 +35,7 @@ services:
     autoDeploy: true
     healthCheckPath: /api/health
     buildCommand: >-
-      npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
+      npm ci --include=dev && npm pkg set overrides.next=16.4.5 && npm install --package-lock=false --no-audit --no-fund && test "$(node -p "require('next/package.json').version")" = "16.4.5" && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
       test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1dc414b50182e64bb6125897bb8f1af03e1222ad &&
       node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
