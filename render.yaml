@@ -37,7 +37,7 @@ services:
     buildCommand: >-
       npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1388baa412065dd6f03b66f76380758bd4a52e46 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 090fa234f252d5edd2064c03d144430361be634a &&
       node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/billing-apply.mjs" --root=. &&
       node "$PATCH_DIR/payment-overlay/verify.mjs" --root=. &&
@@ -54,5 +54,6 @@ services:
       node "$PATCH_DIR/membership-tiers/billing-apply.mjs" --root=. &&
       node "$PATCH_DIR/membership-tiers/billing-verify.mjs" --root=. &&
       node "$PATCH_DIR/membership-tiers/inspect-discord.mjs" &&
+      node "$PATCH_DIR/membership-tiers/discord-role-config-check.mjs" &&
       node scripts/preflight.js central --production
     startCommand: npm run start --workspace=@central/billing-api
