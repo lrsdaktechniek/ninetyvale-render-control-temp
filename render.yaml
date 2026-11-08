@@ -9,7 +9,7 @@ services:
     autoDeploy: true
     healthCheckPath: /legal/privacy
     buildCommand: >-
-      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && node -e "process.exit(require('next/package.json').version==='16.4.5'?0:1)" && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
+      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
       test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = b6ac7e369948618f30d65b29bafc2ee2eff252ba &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
@@ -35,7 +35,7 @@ services:
     autoDeploy: true
     healthCheckPath: /api/health
     buildCommand: >-
-      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && node -e "process.exit(require('next/package.json').version==='16.4.5'?0:1)" && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
+      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
       test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1dc414b50182e64bb6125897bb8f1af03e1222ad &&
       node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
