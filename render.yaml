@@ -11,7 +11,7 @@ services:
     buildCommand: >-
       npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 240a17e770fa1ae33b8de8811a6d903e4e9477c0 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 13addd07df25d2f2720cf05a2913710161ab216c &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-verify.mjs" --root=. &&
@@ -37,7 +37,7 @@ services:
     buildCommand: >-
       npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = cd21eaca13388e2c3ab98ff8062220394cabd8af &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 27a215deeae4a0c79797619358c29848d69ebaad &&
       node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/billing-apply.mjs" --root=. &&
       node "$PATCH_DIR/payment-overlay/verify.mjs" --root=. &&
