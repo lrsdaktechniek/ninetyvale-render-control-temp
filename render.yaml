@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: ninetyvale-site
+    runtime: node
+    plan: 0.5c-512mb
+    region: frankfurt
+    repo: https://github.com/fransiscussimmons/brand-access-platform
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /legal/privacy
+    buildCommand: >-
+      npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
+      git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 9db0d3bf8321e8891d6f4b3c2160c3505287fae7 &&
+      node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
+      node "$PATCH_DIR/discord-analytics/site-apply.mjs" --root=. &&
+      node "$PATCH_DIR/discord-analytics/site-verify.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/site-apply.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/mobile-apply.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/site-verify.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/mobile-verify.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/admin-results-acceptance.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/site-apply.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/site-verify.mjs" --root=. &&
+      npm run build --workspace=@central/aurelis
+    startCommand: npm run start --workspace=@central/aurelis -- --hostname 0.0.0.0 --port "$PORT"
+
+  - type: web
+    name: brand-access-api
+    runtime: node
+    plan: 0.5c-512mb
+    region: frankfurt
+    repo: https://github.com/fransiscussimmons/brand-access-platform
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /api/health
+    buildCommand: >-
+      npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
+      git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = c12b3cc70365db77e07e5f2d93910c69380b1195 &&
+      node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
+      node "$PATCH_DIR/discord-analytics/billing-apply.mjs" --root=. &&
+      node "$PATCH_DIR/payment-overlay/verify.mjs" --root=. &&
+      node "$PATCH_DIR/discord-analytics/billing-verify.mjs" --root=. &&
+      node "$PATCH_DIR/discord-analytics/billing-acceptance.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/billing-apply.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/billing-verify.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/billing-acceptance.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/manual-results-acceptance.mjs" --root=. &&
+      node "$PATCH_DIR/customer-intelligence/outcomes-acceptance.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/tier-contract.test.mjs" &&
+      node "$PATCH_DIR/membership-tiers/tier-account.test.mjs" &&
+      node "$PATCH_DIR/membership-tiers/billing-acceptance.mjs" &&
+      node "$PATCH_DIR/membership-tiers/billing-apply.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/billing-verify.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/discord-bootstrap.mjs" &&
+      node "$PATCH_DIR/membership-tiers/inspect-discord.mjs" &&
+      node scripts/preflight.js central --production
+    startCommand: npm run start --workspace=@central/billing-api
