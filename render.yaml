@@ -53,6 +53,7 @@ services:
       node "$PATCH_DIR/membership-tiers/billing-acceptance.mjs" &&
       node "$PATCH_DIR/membership-tiers/billing-apply.mjs" --root=. &&
       node "$PATCH_DIR/membership-tiers/billing-verify.mjs" --root=. &&
+      node "$PATCH_DIR/membership-tiers/discord-bootstrap.mjs" &&
       node "$PATCH_DIR/membership-tiers/inspect-discord.mjs" &&
       node scripts/preflight.js central --production
     startCommand: npm run start --workspace=@central/billing-api
