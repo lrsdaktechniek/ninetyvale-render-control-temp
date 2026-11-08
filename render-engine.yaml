@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ninetyvale-engine
+    runtime: image
+    plan: free
+    region: frankfurt
+    image:
+      url: docker.io/ninetyvale/ninetyvale-engine@sha256:906408d4b9ec5bc12b4ed25bd27646f4e8dbbee24edaf6f11367d105190d8ab3
+    healthCheckPath: /api/heartbeat
