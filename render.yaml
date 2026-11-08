@@ -11,7 +11,7 @@ services:
     buildCommand: >-
       PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = c5d64d22e6cc5a960d5e8c5e9d080d01f8ba7947 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 7503afdc5b8d73822c3360009ca6cfeb0d45f87b &&
       node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
       npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
       npm ci --include=dev --no-audit --no-fund &&
@@ -41,7 +41,7 @@ services:
     buildCommand: >-
       PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1222ae4739c4febe6fba8b5c87e16ba27c776246 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = b80d41c1336c30b80927a51f9b45a3ea2dcc1a11 &&
       node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
       npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
       npm ci --include=dev --no-audit --no-fund &&
