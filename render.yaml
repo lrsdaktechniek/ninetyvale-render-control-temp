@@ -9,9 +9,13 @@ services:
     autoDeploy: true
     healthCheckPath: /legal/privacy
     buildCommand: >-
-      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
+      PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = b6ac7e369948618f30d65b29bafc2ee2eff252ba &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = c5d64d22e6cc5a960d5e8c5e9d080d01f8ba7947 &&
+      node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
+      npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
+      npm ci --include=dev --no-audit --no-fund &&
+      npm audit --omit=dev --audit-level=high &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-verify.mjs" --root=. &&
@@ -35,9 +39,13 @@ services:
     autoDeploy: true
     healthCheckPath: /api/health
     buildCommand: >-
-      npm pkg set --workspace=@central/aurelis dependencies.next=16.4.5 && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && npm ci --include=dev --no-audit --no-fund && npm audit --omit=dev --audit-level=high && PATCH_DIR=$(mktemp -d) &&
+      PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1dc414b50182e64bb6125897bb8f1af03e1222ad &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1222ae4739c4febe6fba8b5c87e16ba27c776246 &&
+      node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
+      npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
+      npm ci --include=dev --no-audit --no-fund &&
+      npm audit --omit=dev --audit-level=high &&
       node "$PATCH_DIR/payment-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/billing-apply.mjs" --root=. &&
       node "$PATCH_DIR/payment-overlay/verify.mjs" --root=. &&
