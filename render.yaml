@@ -11,7 +11,7 @@ services:
     buildCommand: >-
       npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = cbe635f02e7ceae046c1d83b68d577cbe9a76d6d &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = a2303c3f2464a40615100aa0262b8cc405cde2eb &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-verify.mjs" --root=. &&
@@ -20,7 +20,6 @@ services:
       node "$PATCH_DIR/customer-intelligence/site-verify.mjs" --root=. &&
       node "$PATCH_DIR/customer-intelligence/mobile-verify.mjs" --root=. &&
       node "$PATCH_DIR/customer-intelligence/admin-results-acceptance.mjs" --root=. &&
-      node "$PATCH_DIR/membership-tiers/site-diagnose.mjs" --root=. &&
       node "$PATCH_DIR/membership-tiers/site-apply.mjs" --root=. &&
       node "$PATCH_DIR/membership-tiers/site-verify.mjs" --root=. &&
       npm run build --workspace=@central/aurelis
