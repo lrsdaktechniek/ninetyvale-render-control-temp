@@ -11,7 +11,7 @@ services:
     buildCommand: >-
       npm ci --include=dev && PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 79c934ba719091620827e49c7cb5e563c1527478 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 1bdecb869b79ba5483b0bb39ad4dd5a23fda83ab &&
       node "$PATCH_DIR/site-overlay/apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-apply.mjs" --root=. &&
       node "$PATCH_DIR/discord-analytics/site-verify.mjs" --root=. &&
