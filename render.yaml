@@ -10,8 +10,8 @@ services:
     healthCheckPath: /legal/privacy
     buildCommand: >-
       PATCH_DIR=$(mktemp -d) &&
-      git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-site-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 7503afdc5b8d73822c3360009ca6cfeb0d45f87b &&
+      git clone --quiet --depth 1 --single-branch --branch feat/nv-results-publisher-v2-20261109 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = 55b9707960f28995b8f22ff7ee3da0d27939f1a7 &&
       node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
       npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
       npm ci --include=dev --no-audit --no-fund &&
@@ -41,7 +41,7 @@ services:
     buildCommand: >-
       PATCH_DIR=$(mktemp -d) &&
       git clone --quiet --depth 1 --single-branch --branch feat/nv-membership-tiers-api-v2-20261107 https://gitea.com/ninetyvale/ninetyvale.git "$PATCH_DIR" &&
-      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = b80d41c1336c30b80927a51f9b45a3ea2dcc1a11 &&
+      test "$(git -C "$PATCH_DIR" rev-parse HEAD)" = dc753a7be74e81b65977ffcf66f48a53651c51a8 &&
       node "$PATCH_DIR/membership-tiers/next-security-fix.mjs" --root=. &&
       npm install --package-lock-only --ignore-scripts --no-audit --no-fund &&
       npm ci --include=dev --no-audit --no-fund &&
