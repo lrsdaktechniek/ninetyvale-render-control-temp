@@ -5,6 +5,6 @@ services:
     plan: free
     region: frankfurt
     image:
-      url: docker.io/ninetyvale/ninetyvale-engine@sha256:906408d4b9ec5bc12b4ed25bd27646f4e8dbbee24edaf6f11367d105190d8ab3
+      url: docker.io/ninetyvale/ninetyvale-engine@sha256:43317260f9db9b8714e9b49d6baef51601a63d04c967deda2ff0c714a0daecec
     healthCheckPath: /api/heartbeat
     autoDeployTrigger: off
